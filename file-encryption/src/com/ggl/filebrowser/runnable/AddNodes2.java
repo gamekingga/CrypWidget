@@ -21,7 +21,7 @@ public class AddNodes2 implements Runnable {
     public void run() {
         FileNode fileNode = (FileNode) node.getUserObject();
         if (fileNode.isGenerateGrandchildren()) {
-            model.addGrandchildNodes(node);
+            model.addGrandchildNodesWoFile(node);
             fileNode.setGenerateGrandchildren(false);
         }
     }

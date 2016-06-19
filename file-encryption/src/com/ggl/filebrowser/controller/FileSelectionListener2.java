@@ -38,11 +38,14 @@ public class FileSelectionListener2 implements TreeSelectionListener {
          
         File file = fileNode.getFile();
         frame.updateFileDetail(fileNode);
-        frame.setDesktopButtonFileNode2(fileNode);
+        //frame.setDesktopButtonFileNode2(fileNode);
         if (file.isDirectory()) {
+        	frame.clearDefaultTableModel2();
             frame.setDefaultTableModel2(node);
+            frame.setDesktopButtonDestination(file.getAbsolutePath());
+            
         } else {
-            frame.clearDefaultTableModel2();
+            
         }
     }
      

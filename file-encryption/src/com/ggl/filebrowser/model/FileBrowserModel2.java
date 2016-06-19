@@ -23,8 +23,8 @@ public class FileBrowserModel2 {
             root.add(new DefaultMutableTreeNode(new FileNode(file)));
         }
          
-        addChildNodes(root);
-        addGrandchildNodes(root);
+        addChildNodesWoFile(root);
+        addGrandchildNodesWoFile(root);
          
         return new DefaultTreeModel(root);
     }
@@ -35,6 +35,37 @@ public class FileBrowserModel2 {
             DefaultMutableTreeNode node = 
                     (DefaultMutableTreeNode) enumeration.nextElement();
             addChildNodes(node);
+        }
+    }
+    public void addGrandchildNodesWoFile(DefaultMutableTreeNode root) {
+        Enumeration<?> enumeration = root.children();
+        while (enumeration.hasMoreElements()) {
+            DefaultMutableTreeNode node = 
+                    (DefaultMutableTreeNode) enumeration.nextElement();
+            addChildNodesWoFile(node);
+        }
+    }
+    private void addChildNodesWoFile(DefaultMutableTreeNode root) {
+        Enumeration<?> enumeration = root.children();
+        while (enumeration.hasMoreElements()) {
+            DefaultMutableTreeNode node = 
+                    (DefaultMutableTreeNode) enumeration.nextElement();
+            FileNode fileNode = (FileNode) node.getUserObject();
+            File file = fileNode.getFile();
+            if (file.isDirectory()) {
+                for (File child : file.listFiles()) {
+                	String name=child.getName();
+                	if(child.isDirectory()){                		
+                    node.add(new DefaultMutableTreeNode(
+                            new FileNode(child)));
+                		
+                	}/*else if(name.indexOf(".AESenc")==-1){
+                	node.add(new DefaultMutableTreeNode(
+                                new FileNode(child)));
+                		
+                	}*/
+                }
+            }
         }
     }
  

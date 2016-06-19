@@ -1,6 +1,8 @@
 
 package com.ggl.filebrowser.controller;
 
+import java.util.ArrayList;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -33,17 +35,35 @@ public class TableSelectionListener2 implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent event) {
         if (!event.getValueIsAdjusting()) {
-            ListSelectionModel lsm = 
-                    (ListSelectionModel) event.getSource();
-            int row = lsm.getMinSelectionIndex();
- 
-            if ((row >= 0) && (row < rowCount)) {
-                row = table.convertRowIndexToModel(row);
-                FileNode fileNode = (FileNode) table.getModel()
-                        .getValueAt(row, 10);
-                frame.updateFileDetail(fileNode);
-                frame.setDesktopButtonFileNode2(fileNode);
-            }
+        	 ListSelectionModel lsm = 
+                     (ListSelectionModel) event.getSource();
+             int row = lsm.getMinSelectionIndex();
+         
+             ArrayList<FileNode> Files=new ArrayList<FileNode>();
+             if(!lsm.isSelectionEmpty()){
+             	 int minIndex = lsm.getMinSelectionIndex();
+                  int maxIndex = lsm.getMaxSelectionIndex();
+                  FileNode fileNode = null;
+                  for (int i = minIndex; i <= maxIndex; i++) {
+                 	 if(i==minIndex){
+                      System.out.println(" Selections: ");
+                 	 }
+                      if (lsm.isSelectedIndex(i)) {
+                     	 row = table.convertRowIndexToModel(i);
+                     	 fileNode = (FileNode) table.getModel().getValueAt(row, 3);
+                     	 Files.add(fileNode);
+                     	 System.out.println(i);
+                        }
+                        
+                  }
+                  frame.setDesktopButtonFileNode2(Files);
+             
+             }
+        	
+        	
+        	
+        	
+        	
         }
     }
  

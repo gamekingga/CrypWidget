@@ -29,17 +29,21 @@ public class FileSelectionListener implements TreeSelectionListener {
                 (DefaultMutableTreeNode) 
                 event.getPath().getLastPathComponent();
         FileNode fileNode = (FileNode) node.getUserObject();
-         
+        
         AddNodes addNodes = new AddNodes(model, node);
         new Thread(addNodes).start();
          
+        //model.addChildNodes(node);
         File file = fileNode.getFile();
         frame.updateFileDetail(fileNode);
-        frame.setDesktopButtonFileNode(fileNode);
+        //frame.setDesktopButtonFileNode(fileNode);
         if (file.isDirectory()) {
+        	frame.clearDefaultTableModel();
             frame.setDefaultTableModel(node);
+            frame.setDesktopButtonDestination2(file.getAbsolutePath());
         } else {
-            frame.clearDefaultTableModel();
+        	
+           
         }
     }
      

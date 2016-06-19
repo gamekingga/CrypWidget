@@ -27,6 +27,7 @@ public class TableScrollPane2 {
     private FileBrowserFrame frame;
      
     private FileBrowserModel2 model;
+    private DefaultMutableTreeNode currentnode;
      
     private FileTableModel2 ftModel;
      
@@ -37,6 +38,7 @@ public class TableScrollPane2 {
     private JScrollPane scrollPane;
      
     private JTable table;
+    private String path;
      
     private TableSelectionListener2 tsListener;
  
@@ -64,7 +66,7 @@ public class TableScrollPane2 {
         table.setAutoCreateRowSorter(true);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setColumnSelectionAllowed(false);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
          
         tsListener = new TableSelectionListener2(frame, table);
         tsListener.setRowCount(ftModel.getRowCount());
@@ -84,6 +86,7 @@ public class TableScrollPane2 {
     public String buildLabelString(int count) {
         NumberFormat nf = NumberFormat.getInstance();
         StringBuilder builder = new StringBuilder();
+        builder.append("Path:  "+path+"                ");
         builder.append(nf.format(count));
         builder.append(" files / directories");
         return builder.toString();
@@ -105,10 +108,13 @@ public class TableScrollPane2 {
      
     public void setDefaultTableModel(DefaultMutableTreeNode node) {
         ftModel.removeRows();
-         
+        currentnode=node; 
         FileNode fileNode = (FileNode) node.getUserObject();
+        path=fileNode.getFile().getAbsolutePath();
         File file = fileNode.getFile();
         if (file.isDirectory()) {
+        	
+        	/*
             Enumeration<?> enumeration = node.children();
             while (enumeration.hasMoreElements()) {
                 DefaultMutableTreeNode childNode =
@@ -117,7 +123,19 @@ public class TableScrollPane2 {
                 FileNode childFileNode = 
                         (FileNode) childNode.getUserObject();
                 ftModel.addRow(model, childFileNode);
-            }
+            }*/
+        	  for (File child : file.listFiles()) {
+              	String name=child.getName();
+              	if(child.isDirectory()){ 
+              		ftModel.addRow(model,  new FileNode(child));
+                  
+              	}else if(name.indexOf(".AESenc")!=-1){
+              		ftModel.addRow(model,  new FileNode(child));
+              		
+              	}
+              }
+            
+            
         }
          
         tsListener.setRowCount(ftModel.getRowCount());
@@ -125,5 +143,43 @@ public class TableScrollPane2 {
         ftModel.fireTableDataChanged();
         scrollPane.getVerticalScrollBar().setValue(0);
     }
+    
+    public void refresh(){
+    	ftModel.removeRows();
+        FileNode fileNode = (FileNode) currentnode.getUserObject();
+        path=fileNode.getFile().getAbsolutePath();
+        
+        File file = fileNode.getFile();
+        if (file.isDirectory()) {
+        	/*
+            Enumeration<?> enumeration = node.children();
+            while (enumeration.hasMoreElements()) {
+                DefaultMutableTreeNode childNode =
+                        (DefaultMutableTreeNode)
+                        enumeration.nextElement();
+                FileNode childFileNode = 
+                        (FileNode) childNode.getUserObject();
+                ftModel.addRow(model, childFileNode);
+                
+            }*/
+            for (File child : file.listFiles()) {
+            	String name=child.getName();
+            	if(child.isDirectory()){   
+            		ftModel.addRow(model, new FileNode(child));
+               
+            		
+            	}else if(name.indexOf(".AESenc")!=-1){
+            		ftModel.addRow(model, new FileNode(child));
+            		
+            	}
+            }
+            
+        }
+        tsListener.setRowCount(ftModel.getRowCount());
+        countLabel.setText(buildLabelString(ftModel.getRowCount()));
+        ftModel.fireTableDataChanged();
+        scrollPane.getVerticalScrollBar().setValue(0);
+    }
+    
      
 }

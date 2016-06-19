@@ -23,10 +23,16 @@ public class FileTableModel2 extends AbstractTableModel {
             1661290177236678656L;
      
     private List<List<Object>> rows;
-     
-    private String[] columns = {"Icon", "File", "Size",
-            "Last Modified", "Read", "Write", "Execute", "Hidden", 
-            "Directory", "File"};
+    /* 
+    private String[] columns = {"Icon", "File", "Size"
+    		,"Last Modified", "Read", "Write", "Execute", "Hidden", 
+            "Directory", "File"
+            
+    };*/
+    private String[] columns = {"Icon", "File", "Size(Bytes)"
+            
+    };
+    
      
     public FileTableModel2() {
         this.rows = new ArrayList<List<Object>>();
@@ -81,6 +87,7 @@ public class FileTableModel2 extends AbstractTableModel {
         list.add(model.getFileIcon(file));
         list.add(model.getFileText(file));
         list.add(file.length());
+        /*
         list.add(new Date(file.lastModified()));
         list.add(file.canRead());
         list.add(file.canWrite());
@@ -88,6 +95,7 @@ public class FileTableModel2 extends AbstractTableModel {
         list.add(file.isHidden());
         list.add(file.isDirectory());
         list.add(file.isFile());
+        */
         list.add(fileNode);
          
         this.rows.add(list);
@@ -101,12 +109,13 @@ public class FileTableModel2 extends AbstractTableModel {
         DefaultTableCellRenderer centerRenderer = 
                 new DateRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        table.getColumnModel().getColumn(3)
-            .setCellRenderer(centerRenderer);
+        
+        //table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
          
-        int width = setColumnWidth(table, 0, 35);
-        width += setColumnWidth(table, 1, 200);
-        width += setColumnWidth(table, 2, 70);
+        int width = setColumnWidth(table, 0, 50);
+        width += setColumnWidth(table, 1, 300);
+        width += setColumnWidth(table, 2, 200);
+        /*
         width += setColumnWidth(table, 3, 80);
         width += setColumnWidth(table, 4, 0);
         width += setColumnWidth(table, 5, 0);
@@ -114,7 +123,7 @@ public class FileTableModel2 extends AbstractTableModel {
         width += setColumnWidth(table, 7, 0);
         width += setColumnWidth(table, 8, 0);
         width += setColumnWidth(table, 9, 0);
-         
+        */
         return width + 30;
     }
      
