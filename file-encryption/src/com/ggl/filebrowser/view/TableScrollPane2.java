@@ -17,16 +17,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 //import com.ggl.filebrowser.controller.TableSelectionListener;
 import com.ggl.filebrowser.controller.TableSelectionListener2;
 import com.ggl.filebrowser.model.FileBrowserModel;
+import com.ggl.filebrowser.model.FileBrowserModel2;
 import com.ggl.filebrowser.model.FileNode;
 import com.ggl.filebrowser.model.FileTableModel;
+import com.ggl.filebrowser.model.FileTableModel2;
  
 public class TableScrollPane2 {
      
     private FileBrowserFrame frame;
      
-    private FileBrowserModel model;
+    private FileBrowserModel2 model;
      
-    private FileTableModel ftModel;
+    private FileTableModel2 ftModel;
      
     private JLabel countLabel;
      
@@ -39,7 +41,7 @@ public class TableScrollPane2 {
     private TableSelectionListener2 tsListener;
  
     public TableScrollPane2(FileBrowserFrame frame, 
-            FileBrowserModel model) {
+            FileBrowserModel2 model) {
         this.frame = frame;
         this.model = model;
         createPartControl();
@@ -56,7 +58,7 @@ public class TableScrollPane2 {
         countPanel.add(countLabel);
         panel.add(countPanel, BorderLayout.NORTH);
          
-        ftModel = new FileTableModel();
+        ftModel = new FileTableModel2();
          
         table = new JTable(ftModel);
         table.setAutoCreateRowSorter(true);

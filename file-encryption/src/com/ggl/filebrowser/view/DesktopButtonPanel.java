@@ -16,6 +16,7 @@ public class DesktopButtonPanel {
     private FileNode fileNode;
      
     private JPanel panel;
+    private FileBrowserFrame frame;
      
     public DesktopButtonPanel() {
         createPartControl();
@@ -62,6 +63,10 @@ public class DesktopButtonPanel {
     public JPanel getPanel() {
         return panel;
     }
+    public void setFrame(FileBrowserFrame frame){
+    	this.frame=frame;
+    	
+    }
  
     public class OpenListener implements ActionListener {
  
@@ -69,7 +74,11 @@ public class DesktopButtonPanel {
         public void actionPerformed(ActionEvent event) {
             //openFile(fileNode);
             String sourceFilePath = fileNode.getFile().getAbsolutePath();
-            String destFilePath = fileNode.getFile().getAbsolutePath()+"encrypted";
+            
+            String destFilePath = fileNode.getFile().getAbsolutePath()+".AESenc";
+            //String destFilePath = fileNode.get
+           
+
             try {
 				AESUtils.encryptFile(key, sourceFilePath, destFilePath);
 				System.out.println("sourceFilePath: "+sourceFilePath);
@@ -79,6 +88,8 @@ public class DesktopButtonPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+            frame.setNewModel2();
+            
             
             
         }
