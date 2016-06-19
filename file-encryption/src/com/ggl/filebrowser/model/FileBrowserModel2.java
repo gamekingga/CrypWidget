@@ -8,11 +8,11 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
  
-public class FileBrowserModel {
+public class FileBrowserModel2 {
      
     private FileSystemView fileSystemView;
      
-    public FileBrowserModel() {
+    public FileBrowserModel2() {
         this.fileSystemView = FileSystemView.getFileSystemView();
     }
      
@@ -52,7 +52,7 @@ public class FileBrowserModel {
                     node.add(new DefaultMutableTreeNode(
                             new FileNode(child)));
                 		
-                	}else if(name.indexOf(".AESenc")==-1){
+                	}else if(name.indexOf(".AESenc")!=-1){
                 	node.add(new DefaultMutableTreeNode(
                                 new FileNode(child)));
                 		

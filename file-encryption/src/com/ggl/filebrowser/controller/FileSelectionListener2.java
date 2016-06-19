@@ -8,18 +8,20 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
  
 import com.ggl.filebrowser.model.FileBrowserModel;
+import com.ggl.filebrowser.model.FileBrowserModel2;
 import com.ggl.filebrowser.model.FileNode;
 import com.ggl.filebrowser.runnable.AddNodes;
+import com.ggl.filebrowser.runnable.AddNodes2;
 import com.ggl.filebrowser.view.FileBrowserFrame;
  
 public class FileSelectionListener2 implements TreeSelectionListener {
      
     private FileBrowserFrame frame;
      
-    private FileBrowserModel model;
+    private FileBrowserModel2 model;
  
     public FileSelectionListener2(FileBrowserFrame frame, 
-            FileBrowserModel model) {
+            FileBrowserModel2 model) {
         this.frame = frame;
         this.model = model;
     }
@@ -31,7 +33,7 @@ public class FileSelectionListener2 implements TreeSelectionListener {
                 event.getPath().getLastPathComponent();
         FileNode fileNode = (FileNode) node.getUserObject();
          
-        AddNodes addNodes = new AddNodes(model, node);
+        AddNodes2 addNodes = new AddNodes2(model, node);
         new Thread(addNodes).start();
          
         File file = fileNode.getFile();

@@ -69,11 +69,13 @@ public class DesktopButtonPanel2 {
  
         @Override
         public void actionPerformed(ActionEvent event) {
-            openFile(fileNode);
+            //openFile(fileNode);
             String sourceFilePath = fileNode.getFile().getAbsolutePath();
-            String[] splited = sourceFilePath.split("encrypted");
+            String[] splited = sourceFilePath.split(".AESenc");
+          
+            
             System.out.println(splited[0]);
-            String destFilePath = splited[0]+("decrypted");
+            String destFilePath = splited[0];
             try {
 				AESUtils.decryptFile(key, sourceFilePath, destFilePath);
 			} catch (Exception e) {
